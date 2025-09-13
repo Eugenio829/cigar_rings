@@ -1,0 +1,21 @@
+services:
+  - type: web
+    name: cigar-rings
+    env: python
+    plan: free
+    buildCommand: "./build.sh"
+    startCommand: "gunicorn config.wsgi:application"
+    envVars:
+      - key: SECRET_KEY
+        generateValue: true
+      - key: WEB_CONCURRENCY
+        value: 4
+      - key: DATABASE_URL
+        fromDatabase:
+          name: cigar-rings-db
+          property: connectionString
+
+databases:
+  - name: cigar-rings-db
+    databaseName: cigar_rings_db
+    plan: free
