@@ -1,0 +1,44 @@
+{% extends "base.html" %}
+{% load static %}
+
+{% block title %}Importar Datos desde Excel{% endblock %}
+
+{% block content %}
+<main class="main-content">
+    <div class="page-header">
+        <h1 class="page-title">
+            📥 Importar Datos desde Excel
+        </h1>
+        <p class="page-subtitle">Carga un archivo .xlsx para registrar Órdenes de Fabricación en bloque.</p>
+        <div class="breadcrumb">
+            <span>🏠 Inicio</span> › <span>📋 Gestión de Grabados</span> › <strong>Importar Datos</strong>
+        </div>
+    </div>
+
+    <div class="table-container" style="padding: 30px;">
+        <div class="import-instructions">
+            <h4>Instrucciones de Importación</h4>
+            <p>Para asegurar una importación exitosa, por favor, asegúrate de que tu archivo de Excel (.xlsx) cumpla con el siguiente formato:</p>
+            <ul>
+                <li>La primera fila debe contener los encabezados de las columnas.</li>
+                <li>Los nombres de las columnas deben coincidir exactamente con los nombres de los campos del sistema.</li>
+            </ul>
+            <p><strong>Columnas Requeridas:</strong></p>
+            <pre>OF. Referencia | Descripción | Cliente | Tipo de grabado | Proceso | Máquina | Estado | Fecha de Programación | Ubicación</pre>
+            <p><strong>Nota:</strong> Las opciones para `Tipo de grabado`, `Proceso`, `Máquina` y `Estado` deben coincidir con las opciones ya creadas en el sistema. Si una opción no existe, no se creará automáticamente.</p>
+        </div>
+
+        <form method="post" enctype="multipart/form-data" style="margin-top: 20px;">
+            {% csrf_token %}
+            <div class="filter-group">
+                <label for="excel_file">Selecciona tu archivo de Excel</label>
+                <input type="file" name="excel_file" id="excel_file" accept=".xlsx, .xls" required class="form-control" style="padding: 10px; height: auto;">
+            </div>
+            <div class="modal-footer" style="margin-top: 20px;">
+                <a href="{% url 'grabado_consulta' %}" class="btn btn-secondary">Cancelar</a>
+                <button type="submit" class="btn btn-primary">Cargar e Importar Datos</button>
+            </div>
+        </form>
+    </div>
+</main>
+{% endblock %}

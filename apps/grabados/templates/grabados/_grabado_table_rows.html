@@ -1,0 +1,25 @@
+{% for grabado in grabados %}
+<tr>
+    <td data-label="OF.">{{ grabado.of_numero }}</td>
+    <td data-label="OF. Referencia" title="{{ grabado.of_referencia }}"><span class="of-reference">{{ grabado.of_referencia }}</span></td>
+    <td data-label="Descripción" title="{{ grabado.descripcion }}">{{ grabado.descripcion }}</td>
+    <td data-label="Cliente" title="{{ grabado.cliente }}"><span class="client-name">{{ grabado.cliente }}</span></td>
+    <td data-label="Tipo de grabado">{{ grabado.tipo_grabado.nombre|default:"N/A" }}</td>
+    <td data-label="Proceso">{{ grabado.proceso.nombre|default:"N/A" }}</td>
+    <td data-label="Máquina"><span class="machine-tag">{{ grabado.maquina.nombre|default:"N/A" }}</span></td>
+    <td data-label="Estado"><span class="status-badge status-{{ grabado.estado|lower }}">{{ grabado.get_estado_display }}</span></td>
+    <td data-label="Fecha de Prog.">{{ grabado.fecha_programacion|date:"Y-m-d" }}</td>
+    <td data-label="Ubicación"><span class="location-info">{{ grabado.ubicacion }}</span></td>
+    <td data-label="Acciones">
+        <div class="action-buttons">
+            <button class="btn-action btn-view" title="Ver detalles">👁️</button>
+            <button class="btn-action btn-edit" title="Editar">✏️</button>
+            <button class="btn-action btn-delete" title="Eliminar">🗑️</button>
+        </div>
+    </td>
+</tr>
+{% empty %}
+<tr>
+    <td colspan="12" style="text-align: center; padding: 20px;">No se encontraron registros que coincidan con su búsqueda.</td>
+</tr>
+{% endfor %}
