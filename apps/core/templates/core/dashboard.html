@@ -1,0 +1,61 @@
+{% extends 'base.html' %}
+
+
+<!-- Main Content -->
+    <main class="main-content">
+        {% block content %}
+        <div class="content-card">
+            <h2 class="content-title">Sistema de Gestión Empresarial - Cigar Rings</h2>
+            
+            <div class="feature-section">
+                <div class="feature-title">
+                    🏢 Funcionalidades Empresariales
+                </div>
+                <div class="feature-grid">
+                    <div class="feature-item">
+                        <h4>Interfaz Profesional</h4>
+                        <p>Diseño corporativo elegante con paleta de colores verde institucional y tipografía empresarial.</p>
+                    </div>
+                    <div class="feature-item">
+                        <h4>Navegación Estructurada</h4>
+                        <p>Menú organizado por secciones con categorización clara y jerarquía visual definida.</p>
+                    </div>
+                    <div class="feature-item">
+                        <h4>Responsive Empresarial</h4>
+                        <p>Adaptación completa a dispositivos móviles manteniendo la formalidad y funcionalidad.</p>
+                    </div>
+                    <div class="feature-item">
+                        <h4>Controles Avanzados</h4>
+                        <p>Botones de acción profesionales con iconografía corporativa y feedback visual.</p>
+                    </div>
+                </div>
+            </div>
+
+            <div class="action-buttons">
+                <button class="btn btn-primary" onclick="toggleView()">Alternar Vista</button>
+                <button class="btn btn-secondary" onclick="toggleSidebar()">Contraer Menú</button>
+            </div>
+
+            <div class="info-sections">
+                <div class="info-card">
+                    <h3>Gestión de Grabados</h3>
+                    <p>Administración completa de diseños, plantillas, procesos láser, operaciones mecánicas y seguimiento de pedidos.</p>
+                </div>
+                <div class="info-card">
+                    <h3>Control de Tintas</h3>
+                    <p>Gestión integral de colores, inventario, fórmulas de mezclas, proveedores, consumo y estructura de precios.</p>
+                </div>
+                <div class="info-card">
+                    <h3>Configuración del Sistema</h3>
+                    <p>Administración de usuarios, configuraciones de seguridad, notificaciones y parámetros operativos.</p>
+                </div>
+            </div>
+
+            <div style="text-align: center;">
+                <div class="status-badge">
+                    ✅ Sistema Operativo - Acceso Completo Habilitado
+                </div>
+            </div>
+        </div>
+        {% endblock content %}
+    </main>

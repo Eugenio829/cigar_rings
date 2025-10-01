@@ -1,0 +1,107 @@
+{% extends "base.html" %}
+{% load static %}
+
+{% block title %}Consulta de Grabados - Cigar Rings{% endblock %}
+
+
+
+{% block content %}
+
+
+
+
+
+<!-- Main Content -->
+<main class="main-content">
+    <!-- Page Header -->
+    <div class="page-header">
+        <h1 class="page-title">
+            📋 Gestión de Órdenes de Fabricación
+        </h1>
+        <p class="page-subtitle">Administra y controla todas las OF del sistema de grabados</p>
+        <div class="breadcrumb">
+            <span>🏠 Inicio</span> › <span>📋 Gestión de Grabados</span> › <strong>Tabla de Registros</strong>
+        </div>
+    </div>
+
+    <!-- Table Container -->
+    <div class="table-container">
+        <div class="table-header">
+            <div class="table-title">
+                📊 Registro de Órdenes de Fabricación
+            </div>
+            <div class="table-actions">
+                <div class="search-box">
+                    <input type="text" class="search-input" placeholder="Buscar OF, cliente, descripción..." onkeyup="filterTable()">
+                    <span class="search-icon">🔍</span>
+                </div>
+                <button class="btn btn-secondary" onclick="showFilters()">
+                    🔽 Filtros
+                </button>
+                <button class="btn btn-primary" onclick="addNewOF()">
+                    ➕ Nueva OF
+                </button>
+            </div>
+        </div>
+
+        <div class="table-wrapper">
+            <table id="ofTable">
+                <thead>
+                    <tr>
+                        <th>OF.</th>
+                        <th>OF. Referencia</th>
+                        <th>Descripción</th>
+                        <th>Cliente</th>
+                        <th>Tipo de grabado</th>
+                        <th>Proceso</th>
+                        <th>Máquina</th>
+                        <th>Estado</th>
+                        <th>Fecha de Prog.</th>
+                        <th>Ubicación</th>
+                        <th>Ubicación Carpeta</th>
+                        <th>Acciones</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td data-label="OF.">1</td>
+                        <td data-label="OF. Referencia"><span class="of-reference">OF-2024-001</span></td>
+                        <td data-label="Descripción">Grabado láser anillos premium serie Gold</td>
+                        <td data-label="Cliente"><span class="client-name">Tabacalera Premium S.A.</span></td>
+                        <td data-label="Tipo de grabado">Láser CO2</td>
+                        <td data-label="Proceso">Grabado</td>
+                        <td data-label="Máquina"><span class="machine-tag">Máquina 01</span></td>
+                        <td data-label="Estado"><span class="status-badge status-proceso">En Proceso</span></td>
+                        <td data-label="Fecha de Prog.">2025-09-12</td>
+                        <td data-label="Ubicación"><span class="location-info">Taller A - Mesa 3</span></td>
+                        <td data-label="Ubicación Carpeta"><span class="location-info">/Proyectos/2024/Premium/</span></td>
+                        <td data-label="Acciones">
+                            <div class="action-buttons">
+                                <button class="btn-action btn-view" title="Ver detalles">👁️</button>
+                                <button class="btn-action btn-edit" title="Editar">✏️</button>
+                                <button class="btn-action btn-delete" title="Eliminar">🗑️</button>
+                            </div>
+                        </td>
+                    </tr>
+                    <!-- ... más filas ... -->
+                </tbody>
+            </table>
+        </div>
+
+        <div class="pagination">
+            <div class="pagination-info">
+                Mostrando 1-5 de 25 registros
+            </div>
+            <div class="pagination-controls">
+                <button class="pagination-btn disabled">‹ Anterior</button>
+                <button class="pagination-btn active">1</button>
+                <button class="pagination-btn">2</button>
+                <button class="pagination-btn">3</button>
+                <button class="pagination-btn">Siguiente ›</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Filter Modal (si es necesario) -->
+</main>
+{% endblock %}

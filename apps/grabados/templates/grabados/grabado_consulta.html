@@ -1,0 +1,143 @@
+{% extends "base.html" %}
+{% load static %}
+
+{% block title %}Consulta de Grabados - Cigar Rings{% endblock %}
+
+
+
+{% block content %}
+
+
+
+
+
+<!-- Main Content -->
+<main class="main-content">
+    <!-- Page Header -->
+    <div class="page-header">
+        <h1 class="page-title">
+            📋 Gestión de Órdenes de Fabricación
+        </h1>
+        <p class="page-subtitle">Administra y controla todas las OF del sistema de grabados</p>
+        <div class="breadcrumb">
+            <span>🏠 Inicio</span> › <span>📋 Gestión de Grabados</span> › <strong>Tabla de Registros</strong>
+        </div>
+    </div>
+
+    <!-- Table Container -->
+    <div class="table-container">
+        <div class="table-header">
+            <div class="table-title">
+                📊 Registro de Órdenes de Fabricación
+            </div>
+            <div class="table-actions">
+                <div class="search-box">
+                    <input type="text" id="search-input" class="search-input" name="q" value="{{ query }}" placeholder="Buscar por una o más palabras...">
+                    <span class="search-icon">🔍</span>
+                </div>
+                <button class="btn btn-secondary" onclick="showFilters()">
+                    🔽 Filtros
+                </button>
+                <a href="{% url 'importar_upload' %}" class="btn btn-secondary">
+                    📥 Importar
+                </a>
+                <button class="btn btn-primary" onclick="addNewOF()">
+                    ➕ Nueva OF
+                </button>
+            </div>
+        </div>
+
+        <div class="table-wrapper">
+            <table id="ofTable">
+                <thead>
+                    <tr>
+                        <th>OF.</th>
+                        <th>OF. Referencia</th>
+                        <th>Descripción</th>
+                        <th>Cliente</th>
+                        <th>Tipo de grabado</th>
+                        <th>Proceso</th>
+                        <th>Máquina</th>
+                        <th>Estado</th>
+                        <th>Fecha de Prog.</th>
+                        <th>Ubicación</th>
+                        <th>Acciones</th>
+                    </tr>
+                </thead>
+                <tbody id="grabado-table-body">
+                    {% include 'grabados/_grabado_table_rows.html' %}
+                </tbody>
+            </table>
+        </div>
+
+        <div class="pagination">
+            <div class="pagination-info">
+                Mostrando {{ grabados.count }} de {{ grabados.count }} registros
+            </div>
+            <!-- Pagination logic would go here -->
+        </div>
+    </div>
+
+    <!-- Filter Modal -->
+    <div id="filterModal" class="modal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h2>Filtros Avanzados</h2>
+                <span class="close-button" onclick="closeModal()">&times;</span>
+            </div>
+            <form method="get" action="{% url 'grabado_consulta' %}">
+                <div class="modal-body">
+                    <div class="filter-group">
+                        <label for="id_estado">Estado</label>
+                        <select name="estado" id="id_estado">
+                            <option value="">Todos</option>
+                            {% for choice in grabados.model.ESTADO_CHOICES %}
+                                <option value="{{ choice.0 }}" {% if request.GET.estado == choice.0 %}selected{% endif %}>{{ choice.1 }}</option>
+                            {% endfor %}
+                        </select>
+                    </div>
+                    <div class="filter-group">
+                        <label for="id_maquina">Máquina</label>
+                        <select name="maquina" id="id_maquina">
+                            <option value="">Todas</option>
+                            {% for maquina in maquinas %}
+                                <option value="{{ maquina.id }}" {% if request.GET.maquina == maquina.id|stringformat:"s" %}selected{% endif %}>{{ maquina.nombre }}</option>
+                            {% endfor %}
+                        </select>
+                    </div>
+                    <div class="filter-group">
+                        <label for="id_tipo_grabado">Tipo de Grabado</label>
+                        <select name="tipo_grabado" id="id_tipo_grabado">
+                            <option value="">Todos</option>
+                            {% for tipo in tipos_grabado %}
+                                <option value="{{ tipo.id }}" {% if request.GET.tipo_grabado == tipo.id|stringformat:"s" %}selected{% endif %}>{{ tipo.nombre }}</option>
+                            {% endfor %}
+                        </select>
+                    </div>
+                    <div class="filter-group">
+                        <label for="id_proceso">Proceso</label>
+                        <select name="proceso" id="id_proceso">
+                            <option value="">Todos</option>
+                            {% for proceso in procesos %}
+                                <option value="{{ proceso.id }}" {% if request.GET.proceso == proceso.id|stringformat:"s" %}selected{% endif %}>{{ proceso.nombre }}</option>
+                            {% endfor %}
+                        </select>
+                    </div>
+                    <div class="filter-group">
+                        <label for="id_fecha_desde">Fecha Desde</label>
+                        <input type="date" name="fecha_desde" id="id_fecha_desde" value="{{ request.GET.fecha_desde }}">
+                    </div>
+                    <div class="filter-group">
+                        <label for="id_fecha_hasta">Fecha Hasta</label>
+                        <input type="date" name="fecha_hasta" id="id_fecha_hasta" value="{{ request.GET.fecha_hasta }}">
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <a href="{% url 'grabado_consulta' %}" class="btn btn-secondary">Limpiar</a>
+                    <button type="submit" class="btn btn-primary">Aplicar Filtros</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</main>
+{% endblock %}
