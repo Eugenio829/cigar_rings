@@ -16,7 +16,7 @@ SECRET_KEY = config('SECRET_KEY')
 DEBUG = True
 
 # Reemplaza 'tu-usuario' con tu nombre de usuario de PythonAnywhere
-ALLOWED_HOSTS = ['Eugeniojiemenz17.pythonanywhere.com']
+ALLOWED_HOSTS = ['Eugeniojiemenz17.pythonanywhere.com', '127.0.0.1']
 
 
 # Application definition
