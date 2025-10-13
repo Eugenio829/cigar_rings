@@ -41,14 +41,13 @@ class DashboardView(TemplateView):
         # Gráfico 4: Gráfico de Tendencia (Últimos 30 días)
         grabados_por_dia = (
             Grabado.objects.filter(fecha_programacion__gte=treinta_dias_atras)
-            .annotate(dia=TruncDate('fecha_programacion'))
-            .values('dia')
+            .values('fecha_programacion')
             .annotate(total=Count('of_numero'))
-            .order_by('dia')
+            .order_by('fecha_programacion')
         )
 
         # Preparar datos para el gráfico, rellenando días sin datos
-        date_map = {item['dia']: item['total'] for item in grabados_por_dia}
+        date_map = {item['fecha_programacion']: item['total'] for item in grabados_por_dia}
         tendencia_labels = [(datetime.now() - timedelta(days=i)).strftime('%Y-%m-%d') for i in range(29, -1, -1)]
         tendencia_data = [date_map.get(datetime.strptime(date, '%Y-%m-%d').date(), 0) for date in tendencia_labels]
 
