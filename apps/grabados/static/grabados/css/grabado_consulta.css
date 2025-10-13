@@ -235,16 +235,16 @@
         /* Main Content */
         .main-content {
             flex: 1;
-            margin-top: 20px;
-            padding: 20px;
+            margin-top: 70px; /* Espacio para el header fijo */
+            padding: 15px;
             transition: margin-left 0.4s ease;
         }
 
         .page-header {
             background: white;
-            padding: 30px;
+            padding: 20px;
             border-radius: 12px;
-            margin-bottom: 30px;
+            margin-bottom: 20px;
             box-shadow: 0 2px 15px rgba(46, 125, 50, 0.08);
         }
 
@@ -554,6 +554,14 @@
 
         /* Responsive Table Styles */
         @media screen and (max-width: 768px) {
+            .main-content {
+                padding: 10px;
+                margin-top: 60px; /* Ajuste para header en móvil */
+            }
+            .page-header {
+                padding: 15px;
+                margin-bottom: 15px;
+            }
             .table-header {
                 flex-direction: column;
                 gap: 15px;
