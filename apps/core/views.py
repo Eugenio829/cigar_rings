@@ -66,3 +66,5 @@ class DashboardView(TemplateView):
 
         context['page_title'] = "Dashboard Ejecutivo"
         return context
+
+# End of file
