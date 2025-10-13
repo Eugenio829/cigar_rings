@@ -536,7 +536,7 @@
         /* Responsive para Tablets */
         @media (max-width: 992px) {
             .header-title {
-                font-size: 16px;
+                display: none; /* Ocultar en tablets y pantallas medianas */
             }
         }
 
