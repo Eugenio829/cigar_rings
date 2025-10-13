@@ -1,61 +1,334 @@
 {% extends 'base.html' %}
+{% block content %}
+<style>
+    .kpi-grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+        gap: 0.8rem;
+        margin-bottom: 2rem;
+    }
+    .kpi-card {
+        background: #fff;
+        border-radius: 8px;
+        box-shadow: 0 2px 8px rgba(0,0,0,0.07);
+        padding: 0.8rem;
+        display: flex;
+        flex-direction: column;
+        justify-content: space-between;
+        transition: transform 0.3s ease, box-shadow 0.3s ease;
+    }
+    .kpi-card:hover {
+        transform: translateY(-3px);
+        box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+    }
+    .kpi-title {
+        font-size: 0.7rem;
+        font-weight: 600;
+        color: #555;
+        text-transform: uppercase;
+        margin-bottom: 0.3rem;
+    }
+    .kpi-value {
+        font-size: 1.5rem;
+        font-weight: 700;
+        color: #2c3e50;
+        margin-bottom: 0.3rem;
+    }
+    .kpi-description {
+        font-size: 0.7rem;
+        color: #777;
+    }
 
+    .chart-container {
+        display: grid;
+        grid-template-columns: 1fr; /* Una columna por defecto para móviles */
+        gap: 1.5rem;
+        padding: 1.5rem;
+        background-color: #f9f9f9;
+        border-radius: 8px;
+    }
 
-<!-- Main Content -->
-    <main class="main-content">
-        {% block content %}
-        <div class="content-card">
-            <h2 class="content-title">Sistema de Gestión Empresarial - Cigar Rings</h2>
-            
-            <div class="feature-section">
-                <div class="feature-title">
-                    🏢 Funcionalidades Empresariales
-                </div>
-                <div class="feature-grid">
-                    <div class="feature-item">
-                        <h4>Interfaz Profesional</h4>
-                        <p>Diseño corporativo elegante con paleta de colores verde institucional y tipografía empresarial.</p>
-                    </div>
-                    <div class="feature-item">
-                        <h4>Navegación Estructurada</h4>
-                        <p>Menú organizado por secciones con categorización clara y jerarquía visual definida.</p>
-                    </div>
-                    <div class="feature-item">
-                        <h4>Responsive Empresarial</h4>
-                        <p>Adaptación completa a dispositivos móviles manteniendo la formalidad y funcionalidad.</p>
-                    </div>
-                    <div class="feature-item">
-                        <h4>Controles Avanzados</h4>
-                        <p>Botones de acción profesionales con iconografía corporativa y feedback visual.</p>
-                    </div>
-                </div>
-            </div>
+    @media (min-width: 992px) { /* Dos columnas para pantallas más grandes */
+        .chart-container {
+            grid-template-columns: repeat(2, 1fr);
+        }
+    }
 
-            <div class="action-buttons">
-                <button class="btn btn-primary" onclick="toggleView()">Alternar Vista</button>
-                <button class="btn btn-secondary" onclick="toggleSidebar()">Contraer Menú</button>
-            </div>
+    .chart-card {
+        background-color: #fff;
+        border-radius: 10px;
+        box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
+        padding: 1.5rem;
+        transition: transform 0.3s ease, box-shadow 0.3s ease;
+    }
+    .chart-card:hover {
+        transform: translateY(-5px);
+        box-shadow: 0 8px 20px rgba(0, 0, 0, 0.12);
+    }
+    .chart-title {
+        text-align: center;
+        font-size: 1.3rem;
+        font-weight: 600;
+        color: #333;
+        margin-bottom: 1.5rem;
+    }
+    .page-header {
+        font-size: 2rem;
+        font-weight: 700;
+        color: #2c3e50;
+        margin-bottom: 1.5rem;
+        padding-left: 1.5rem;
+    }
 
-            <div class="info-sections">
-                <div class="info-card">
-                    <h3>Gestión de Grabados</h3>
-                    <p>Administración completa de diseños, plantillas, procesos láser, operaciones mecánicas y seguimiento de pedidos.</p>
-                </div>
-                <div class="info-card">
-                    <h3>Control de Tintas</h3>
-                    <p>Gestión integral de colores, inventario, fórmulas de mezclas, proveedores, consumo y estructura de precios.</p>
-                </div>
-                <div class="info-card">
-                    <h3>Configuración del Sistema</h3>
-                    <p>Administración de usuarios, configuraciones de seguridad, notificaciones y parámetros operativos.</p>
-                </div>
-            </div>
+    /* Estilos específicos para móviles */
+    @media (max-width: 767px) {
+        .kpi-grid {
+            grid-template-columns: repeat(2, 1fr);
+            gap: 0.4rem;
+        }
+        .kpi-card {
+            padding: 0.5rem;
+            min-height: 95px; /* Altura mínima para uniformidad */
+        }
+        .kpi-title {
+            font-size: 0.55rem;
+        }
+        .kpi-value {
+            font-size: 1.1rem;
+            margin-bottom: 0.2rem;
+        }
+        .kpi-description {
+            font-size: 0.6rem;
+            line-height: 1.2;
+        }
+        /* Ajuste especial para el nombre del cliente que es más largo */
+        .kpi-grid .kpi-card:last-child .kpi-value {
+            font-size: 0.9rem;
+        }
+        .page-header {
+            font-size: 1.4rem;
+            padding-left: 0.8rem;
+        }
+    }
+</style>
 
-            <div style="text-align: center;">
-                <div class="status-badge">
-                    ✅ Sistema Operativo - Acceso Completo Habilitado
-                </div>
-            </div>
-        </div>
-        {% endblock content %}
-    </main>
+<h1 class="page-header">{{ page_title }}</h1>
+
+<!-- KPI Cards -->
+<div class="kpi-grid">
+    <div class="kpi-card">
+        <div class="kpi-title">Grabados Pendientes</div>
+        <div class="kpi-value">{{ kpi_pendientes }}</div>
+        <div class="kpi-description">Órdenes esperando para ser procesadas.</div>
+    </div>
+    <div class="kpi-card">
+        <div class="kpi-title">Completados (Últimos 30 días)</div>
+        <div class="kpi-value">{{ kpi_completados_30d }}</div>
+        <div class="kpi-description">Órdenes finalizadas recientemente.</div>
+    </div>
+    <div class="kpi-card">
+        <div class="kpi-title">Total Órdenes de Fab.</div>
+        <div class="kpi-value">{{ kpi_total_ofs }}</div>
+        <div class="kpi-description">Historial completo de órdenes.</div>
+    </div>
+    <div class="kpi-card">
+        <div class="kpi-title">Cliente Principal</div>
+        <div class="kpi-value" style="font-size: 1.2rem; white-space: nowrap; overflow: hidden; text-overflow: ellipsis;" title="{{ kpi_cliente_principal }}">{{ kpi_cliente_principal }}</div>
+        <div class="kpi-description">Cliente con mayor volumen de pedidos.</div>
+    </div>
+</div>
+
+<div class="chart-container">
+    <div class="chart-card">
+        <h3 class="chart-title">Tendencia de Producción (Últimos 30 días)</h3>
+        <canvas id="tendenciaProduccionChart"></canvas>
+    </div>
+    <div class="chart-card">
+        <h3 class="chart-title">Grabados por Estado</h3>
+        <canvas id="grabadosPorEstadoChart"></canvas>
+    </div>
+    <div class="chart-card">
+        <h3 class="chart-title">Grabados por Máquina</h3>
+        <canvas id="grabadosPorMaquinaChart"></canvas>
+    </div>
+    <div class="chart-card">
+        <h3 class="chart-title">Top 5 Clientes</h3>
+        <canvas id="topClientesChart"></canvas>
+    </div>
+</div>
+
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+    // Paleta de colores profesional
+    const colors = {
+        primary: 'rgba(40, 167, 69, 0.8)',
+        secondary: 'rgba(0, 123, 255, 0.8)',
+        success: 'rgba(40, 167, 69, 0.8)',
+        danger: 'rgba(220, 53, 69, 0.8)',
+        warning: 'rgba(255, 193, 7, 0.8)',
+        info: 'rgba(23, 162, 184, 0.8)',
+        light: 'rgba(248, 249, 250, 0.8)',
+        dark: 'rgba(52, 58, 64, 0.8)',
+    };
+
+    const colorPalette = [
+        colors.primary, colors.secondary, colors.warning, colors.danger, colors.info, 
+        'rgba(108, 117, 125, 0.8)', 'rgba(25, 135, 84, 0.8)', 'rgba(13, 202, 240, 0.8)'
+    ];
+
+    // 1. Gráfico de Grabados por Estado (Doughnut)
+    const estadosCtx = document.getElementById('grabadosPorEstadoChart').getContext('2d');
+    const estadosLabels = JSON.parse('{{ estados_labels|safe }}');
+    const estadosData = JSON.parse('{{ estados_data|safe }}');
+    
+    new Chart(estadosCtx, {
+        type: 'doughnut',
+        data: {
+            labels: estadosLabels,
+            datasets: [{
+                label: 'Total',
+                data: estadosData,
+                backgroundColor: colorPalette,
+                borderColor: '#fff',
+                borderWidth: 2
+            }]
+        },
+        options: {
+            responsive: true,
+            plugins: {
+                legend: {
+                    position: 'top',
+                },
+                title: {
+                    display: false
+                }
+            }
+        }
+    });
+
+    // 2. Gráfico de Grabados por Máquina (Bar)
+    const maquinasCtx = document.getElementById('grabadosPorMaquinaChart').getContext('2d');
+    const maquinasLabels = JSON.parse('{{ maquinas_labels|safe }}');
+    const maquinasData = JSON.parse('{{ maquinas_data|safe }}');
+
+    new Chart(maquinasCtx, {
+        type: 'bar',
+        data: {
+            labels: maquinasLabels,
+            datasets: [{
+                label: 'Total de Grabados',
+                data: maquinasData,
+                backgroundColor: colors.secondary,
+                borderColor: 'rgba(0, 123, 255, 1)',
+                borderWidth: 1,
+                borderRadius: 5
+            }]
+        },
+        options: {
+            responsive: true,
+            scales: {
+                y: {
+                    beginAtZero: true,
+                    ticks: {
+                        stepSize: 1
+                    }
+                }
+            },
+            plugins: {
+                legend: {
+                    display: false
+                }
+            }
+        }
+    });
+
+    // 4. Gráfico de Tendencia (Líneas)
+    const tendenciaCtx = document.getElementById('tendenciaProduccionChart').getContext('2d');
+    const tendenciaLabels = JSON.parse('{{ tendencia_labels|safe }}');
+    const tendenciaData = JSON.parse('{{ tendencia_data|safe }}');
+
+    const gradient = tendenciaCtx.createLinearGradient(0, 0, 0, 400);
+    gradient.addColorStop(0, 'rgba(46, 125, 50, 0.3)');
+    gradient.addColorStop(1, 'rgba(46, 125, 50, 0)');
+
+    new Chart(tendenciaCtx, {
+        type: 'line',
+        data: {
+            labels: tendenciaLabels,
+            datasets: [{
+                label: 'Órdenes Creadas',
+                data: tendenciaData,
+                borderColor: '#2e7d32',
+                backgroundColor: gradient,
+                borderWidth: 3,
+                pointBackgroundColor: '#1b5e20',
+                pointRadius: 4,
+                pointHoverRadius: 6,
+                tension: 0.4, // Suaviza la línea
+                fill: true
+            }]
+        },
+        options: {
+            responsive: true,
+            scales: {
+                y: {
+                    beginAtZero: true,
+                    ticks: {
+                        stepSize: 1
+                    }
+                },
+                x: {
+                    ticks: {
+                        maxRotation: 0,
+                        autoSkip: true,
+                        maxTicksLimit: 15 // Limita el número de etiquetas de fecha
+                    }
+                }
+            },
+            plugins: {
+                legend: {
+                    display: false
+                }
+            }
+        }
+    });
+
+    // 5. Gráfico Top 5 Clientes (Barras Horizontales)
+    const clientesCtx = document.getElementById('topClientesChart').getContext('2d');
+    const clientesLabels = JSON.parse('{{ clientes_labels|safe }}');
+    const clientesData = JSON.parse('{{ clientes_data|safe }}');
+
+    new Chart(clientesCtx, {
+        type: 'bar',
+        data: {
+            labels: clientesLabels,
+            datasets: [{
+                label: 'Total de Órdenes',
+                data: clientesData,
+                backgroundColor: colorPalette.slice(4), // Usar otra parte de la paleta
+                borderColor: '#fff',
+                borderWidth: 2,
+                borderRadius: 5
+            }]
+        },
+        options: {
+            indexAxis: 'y', // Hacer el gráfico de barras horizontal
+            responsive: true,
+            scales: {
+                x: {
+                    beginAtZero: true,
+                    ticks: {
+                        stepSize: 1
+                    }
+                }
+            },
+            plugins: {
+                legend: {
+                    display: false
+                }
+            }
+        }
+    });
+});
+</script>
+{% endblock %}

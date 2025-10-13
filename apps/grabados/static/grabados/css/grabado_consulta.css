@@ -612,6 +612,14 @@
 
             td:before {
                 position: absolute;
+.btn-success {
+    background-color: #28a745;
+    color: white;
+    border: none;
+    padding: 8px 12px;
+    border-radius: 5px;
+    cursor: pointer;
+}
                 top: 6px;
                 left: 6px;
                 width: 45%;

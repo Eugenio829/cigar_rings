@@ -41,15 +41,35 @@ function clearFilters() {
     alert("Limpiando filtros...");
 }
 
-// Cerrar el modal si se hace clic fuera de él
-window.onclick = function(event) {
-    const modal = document.getElementById('filterModal');
-    if (event.target == modal) {
-        closeModal();
-    }
-}
-
 $(document).ready(function() {
+    // Modal de exportación
+    var exportModal = document.getElementById("exportModal");
+    var exportBtn = document.getElementById("exportBtn");
+    var closeButton = document.getElementsByClassName("close-button")[0];
+
+    if(exportBtn) {
+        exportBtn.onclick = function() {
+            exportModal.style.display = "block";
+        }
+    }
+
+    if(closeButton) {
+        closeButton.onclick = function() {
+            exportModal.style.display = "none";
+        }
+    }
+
+    // Cerrar modales si se hace clic fuera de ellos
+    window.onclick = function(event) {
+        const filterModal = document.getElementById('filterModal');
+        if (event.target == filterModal) {
+            closeModal();
+        }
+        if (event.target == exportModal) {
+            exportModal.style.display = "none";
+        }
+    }
+
     // Initialize Select2 on the "Tipo de Grabado" dropdown
     $('#id_tipo_grabado').select2({
         placeholder: "Seleccione o busque un tipo",

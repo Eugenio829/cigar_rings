@@ -530,8 +530,16 @@
 
         /* Mobile Responsive */
         @media (max-width: 768px) {
+            .header {
+                padding: 0 15px;
+            }
+
             .header.sidebar-open {
                 left: 0;
+            }
+
+            .header-title {
+                display: none !important; /* Forzar ocultación del título en móviles */
             }
 
             .sidebar {
@@ -552,16 +560,40 @@
             }
 
             .header-right {
-                gap: 10px;
+                display: flex;
+                align-items: center;
+                gap: 8px; /* Espacio reducido */
             }
 
-            .user-info span {
-                display: none;
+            .user-avatar {
+                width: 28px; /* Aún más pequeño */
+                height: 28px; /* Aún más pequeño */
+                font-size: 12px;
+            }
+
+            .refresh-btn,
+            .logout-btn {
+                padding: 6px 8px; /* Menos padding */
+                font-size: 14px; /* Icono más pequeño */
+            }
+
+            /* Restaurar el estilo original del user-info en móvil */
+            .user-info {
+                padding: 2px; /* Padding mínimo */
+                background: rgba(46, 125, 50, 0.05);
+                border-radius: 50%; /* Hacerlo un círculo perfecto */
+                border: 1px solid rgba(46, 125, 50, 0.1);
+            }
+
+            /* Separador visual para los botones */
+            .refresh-btn {
+                border-left: 1px solid #e0e0e0;
+                padding-left: 8px;
             }
 
             .refresh-btn span:not(.refresh-icon),
-            .logout-btn span {
-                display: none;
+            .logout-btn {
+                display: none !important; /* Forzar ocultación en móvil */
             }
 
             .feature-grid {
