@@ -552,25 +552,8 @@
             cursor: not-allowed;
         }
 
-        /* Responsive */
-        @media (max-width: 768px) {
-            .header.sidebar-open {
-                left: 0;
-            }
-
-            .sidebar {
-                width: 100%;
-                left: -100%;
-            }
-
-            .main-content {
-                padding: 15px;
-            }
-
-            .page-header {
-                padding: 20px;
-            }
-
+        /* Responsive Table Styles */
+        @media screen and (max-width: 768px) {
             .table-header {
                 flex-direction: column;
                 gap: 15px;
@@ -582,12 +565,9 @@
             }
 
             .table-wrapper {
-                font-size: 14px;
+                overflow-x: hidden; /* Ocultar scroll horizontal en móvil */
             }
 
-            th, td {
-                padding: 10px 8px;
-            }
             table, thead, tbody, th, td, tr {
                 display: block;
             }
@@ -599,34 +579,48 @@
             }
 
             tr {
-                border: 1px solid #ccc;
-                margin-bottom: 5px;
+                border: 1px solid #e0e0e0;
+                border-radius: 8px;
+                margin-bottom: 15px;
+                box-shadow: 0 2px 4px rgba(0,0,0,0.05);
             }
 
             td {
                 border: none;
-                border-bottom: 1px solid #eee;
+                border-bottom: 1px solid #f0f0f0;
                 position: relative;
-                padding-left: 50%;
+                padding: 12px 15px 12px 45%; /* Espacio para la etiqueta */
+                text-align: right; /* Alinear valor a la derecha */
+                white-space: normal; /* Permitir que el texto se ajuste */
+                overflow: visible;
+            }
+
+            td:last-child {
+                border-bottom: none;
             }
 
             td:before {
                 position: absolute;
-.btn-success {
-    background-color: #28a745;
-    color: white;
-    border: none;
-    padding: 8px 12px;
-    border-radius: 5px;
-    cursor: pointer;
-}
-                top: 6px;
-                left: 6px;
-                width: 45%;
+                top: 50%;
+                left: 15px;
+                width: 40%;
                 padding-right: 10px;
                 white-space: nowrap;
                 content: attr(data-label);
-                font-weight: bold;
+                font-weight: 600;
+                color: #1b5e20;
+                text-align: left;
+                transform: translateY(-50%);
+            }
+
+            /* Centrar los botones de acción */
+            td[data-label="Acciones"] {
+                padding-left: 15px; /* Quitar padding especial */
+                text-align: center;
+            }
+
+            td[data-label="Acciones"]:before {
+                display: none; /* No mostrar etiqueta para acciones */
             }
         }
 
