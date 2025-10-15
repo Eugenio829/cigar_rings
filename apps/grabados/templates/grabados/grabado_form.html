@@ -1,0 +1,105 @@
+{% extends "base.html" %}
+
+{% block content %}
+<div class="container">
+    <div class="page-header">
+        <h1>➕ Nueva Orden de Fabricación</h1>
+        <div class="breadcrumb">
+            <a href="{% url 'grabado_consulta' %}" style="text-decoration: none; color: inherit;"><span>🏠 Inicio</span></a> › 
+            <a href="{% url 'grabado_consulta' %}" style="text-decoration: none; color: inherit;"><span>📋 Gestión de Grabados</span></a> › 
+            <strong>Nueva OF</strong>
+        </div>
+    </div>
+
+    <form method="post" class="form-container" novalidate>
+        {% csrf_token %}
+
+        <div class="form-section">
+            <h2 class="section-title">Identificación de la Orden</h2>
+            <div class="form-grid">
+                <div class="form-group">
+                    {{ form.of_numero.label_tag }}
+                    {{ form.of_numero }}
+                    {% for error in form.of_numero.errors %}<span class="error">{{ error }}</span>{% endfor %}
+                </div>
+                <div class="form-group">
+                    {{ form.of_referencia.label_tag }}
+                    {{ form.of_referencia }}
+                    {% for error in form.of_referencia.errors %}<span class="error">{{ error }}</span>{% endfor %}
+                </div>
+                <div class="form-group full-width">
+                    {{ form.cliente.label_tag }}
+                    {{ form.cliente }}
+                    {% for error in form.cliente.errors %}<span class="error">{{ error }}</span>{% endfor %}
+                </div>
+            </div>
+        </div>
+
+        <div class="form-section">
+            <h2 class="section-title">Especificaciones del Grabado</h2>
+            <div class="form-grid">
+                <div class="form-group full-width">
+                    {{ form.descripcion.label_tag }}
+                    {{ form.descripcion }}
+                    {% for error in form.descripcion.errors %}<span class="error">{{ error }}</span>{% endfor %}
+                </div>
+                <div class="form-group">
+                    {{ form.tipo_grabado.label_tag }}
+                    {{ form.tipo_grabado }}
+                    {% for error in form.tipo_grabado.errors %}<span class="error">{{ error }}</span>{% endfor %}
+                </div>
+                <div class="form-group">
+                    {{ form.proceso.label_tag }}
+                    {{ form.proceso }}
+                    {% for error in form.proceso.errors %}<span class="error">{{ error }}</span>{% endfor %}
+                </div>
+                <div class="form-group">
+                    {{ form.maquina.label_tag }}
+                    {{ form.maquina }}
+                    {% for error in form.maquina.errors %}<span class="error">{{ error }}</span>{% endfor %}
+                </div>
+            </div>
+        </div>
+
+        <div class="form-section">
+            <h2 class="section-title">Estado y Logística</h2>
+            <div class="form-grid">
+                <div class="form-group">
+                    {{ form.estado.label_tag }}
+                    {{ form.estado }}
+                    {% for error in form.estado.errors %}<span class="error">{{ error }}</span>{% endfor %}
+                </div>
+                <div class="form-group">
+                    {{ form.fecha_programacion.label_tag }}
+                    {{ form.fecha_programacion }}
+                    {% for error in form.fecha_programacion.errors %}<span class="error">{{ error }}</span>{% endfor %}
+                </div>
+                <div class="form-group">
+                    {{ form.ubicacion.label_tag }}
+                    {{ form.ubicacion }}
+                    {% for error in form.ubicacion.errors %}<span class="error">{{ error }}</span>{% endfor %}
+                </div>
+                <div class="form-group">
+                    {{ form.ubicacion_carpeta.label_tag }}
+                    {{ form.ubicacion_carpeta }}
+                    {% for error in form.ubicacion_carpeta.errors %}<span class="error">{{ error }}</span>{% endfor %}
+                </div>
+            </div>
+        </div>
+
+        {% if form.non_field_errors %}
+            <div class="non-field-errors">
+                {% for error in form.non_field_errors %}
+                    <span class="error">{{ error }}</span>
+                {% endfor %}
+            </div>
+        {% endif %}
+
+        <div class="button-group">
+            <a href="{% url 'grabado_consulta' %}" class="btn btn-secondary">Cancelar</a>
+            <button type="submit" class="btn btn-primary">Guardar Orden</button>
+        </div>
+
+    </form>
+</div>
+{% endblock %}

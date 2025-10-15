@@ -36,6 +36,10 @@ INSTALLED_APPS = [
     'apps.tintas',
     'apps.almacen',
     'apps.users',
+
+    # 3rd party
+    'crispy_forms',
+    'crispy_bootstrap5',
 ]
 
 MIDDLEWARE = [
@@ -134,3 +138,7 @@ LOGIN_URL = 'login'
 # Configuración de tiempo de espera de la sesión
 SESSION_COOKIE_AGE = 300  # 5 minutos en segundos
 SESSION_SAVE_EVERY_REQUEST = True  # Reinicia el contador con cada petición
+
+# Crispy Forms Settings
+CRISPY_ALLOWED_TEMPLATE_PACKS = "bootstrap5"
+CRISPY_TEMPLATE_PACK = "bootstrap5"

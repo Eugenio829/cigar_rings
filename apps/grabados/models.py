@@ -24,7 +24,7 @@ class Grabado(models.Model):
     ]
 
     of_numero = models.IntegerField(primary_key=True, verbose_name='OF.')
-    of_referencia = models.CharField(max_length=100, unique=True, verbose_name='OF. Referencia')
+    of_referencia = models.CharField(max_length=100, null=True, blank=True, verbose_name='OF. Referencia')
     descripcion = models.TextField(verbose_name='Descripción')
     cliente = models.CharField(max_length=255, verbose_name='Cliente')
     

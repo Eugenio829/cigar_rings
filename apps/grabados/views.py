@@ -8,6 +8,7 @@ from functools import reduce
 from django.db import transaction, IntegrityError
 from django.http import HttpResponse
 import io
+from .forms import GrabadoForm
 
 # Vista principal, renderiza la plantilla base
 def index(request):
@@ -262,3 +263,17 @@ def exportar_excel(request):
     response['Content-Disposition'] = f'attachment; filename="{filename}"'
     
     return response
+
+def grabado_crear(request):
+    if request.method == 'POST':
+        form = GrabadoForm(request.POST)
+        if form.is_valid():
+            form.save()
+            messages.success(request, 'Grabado creado exitosamente.')
+            return redirect('grabado_consulta')
+        else:
+            messages.error(request, 'Por favor corrige los errores en el formulario.')
+    else:
+        form = GrabadoForm()
+    
+    return render(request, 'grabados/grabado_form.html', {'form': form})

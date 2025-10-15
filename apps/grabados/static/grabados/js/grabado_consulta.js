@@ -15,11 +15,6 @@ function closeModal() {
     }
 }
 
-function addNewOF() {
-    console.log("Función addNewOF() llamada.");
-    alert("Abriendo formulario para nueva OF...");
-}
-
 function exportData() {
     console.log("Función exportData() llamada.");
     alert("Exportando datos...");
@@ -70,13 +65,24 @@ $(document).ready(function() {
         }
     }
 
-    // Initialize Select2 on the "Tipo de Grabado" dropdown
-    $('#id_tipo_grabado').select2({
-        placeholder: "Seleccione o busque un tipo",
-        allowClear: true,
-        width: '100%',
-        dropdownParent: $('#filterModal .modal-content') // Attach dropdown to the modal
-    });
+    // Conditionally initialize Select2 for the filter modal on the consultation page
+    if ($('#filterModal').length) {
+        $('#id_tipo_grabado').select2({
+            placeholder: "Seleccione o busque un tipo",
+            allowClear: true,
+            width: '100%',
+            dropdownParent: $('#filterModal .modal-content') // Attach dropdown to the modal
+        });
+    }
+
+    // Initialize Select2 for all select elements on the new form page
+    if ($('.form-container').length) {
+        $('.form-container select').select2({
+            placeholder: "Seleccione una opción",
+            allowClear: true,
+            width: '100%'
+        });
+    }
 
     // Live search functionality
     let debounceTimeout;
